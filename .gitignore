@@ -1,2 +1,2 @@
-tmdb_config.*
 *.pyc
+tmdb_config.py
