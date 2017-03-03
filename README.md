@@ -1,4 +1,4 @@
-Udacity FSND Project 1: Movie Trailer Website
+# Udacity FSND Project 1: Movie Trailer Website
 
 1. Create an API key with https://www.themoviedb.org/
 1. Rename `tmdb_config.sample.py` to `tmdb_config.py`
