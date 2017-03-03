@@ -3,6 +3,7 @@ import urllib
 import json
 import tmdb_config
 
+# you will need to create a tmdb_config file with your own API key
 API_KEY = tmdb_config.get_key()
 
 class Movie():
@@ -19,18 +20,20 @@ class Movie():
         self.data.update(self.get_movie_data(self.data['id']))
 
     def get_movie_id(self, options):
+        # if there is a year specification, use it,
         year_query = ''
         if (('year' in options) and options['year']):
             year_query = '&year=' + options['year']
 
+        # otherwise default to first search result based on title
         api_url = self.BASE_API_URI + 'search/movie?query=' + options['title'] + '&api_key='+ API_KEY + year_query
         connection = urllib.urlopen(api_url)
-
         id = json.loads(connection.read())['results'][0]['id']
         connection.close()
         return id
 
     def get_movie_data(self, movie_id):
+        # get poster image and other related movie data for specified movie
         data_url = self.BASE_API_URI + 'movie/' + str(movie_id) + '?api_key=' + API_KEY
         connection = urllib.urlopen(data_url)
         data = json.loads(connection.read())
@@ -38,6 +41,7 @@ class Movie():
         return data
 
     def get_trailer_url(self, movie_id):
+        # get trailer data for specified movie
         data_url = self.BASE_API_URI + 'movie/' + str(movie_id) + '/videos?api_key=' + API_KEY
         connection = urllib.urlopen(data_url)
         data = json.loads(connection.read())['results'][0]['key']

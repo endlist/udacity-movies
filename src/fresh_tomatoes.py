@@ -142,6 +142,7 @@ def create_movie_tiles_content(movies):
 
 def open_movies_page(movies):
   # Create or overwrite the output file
+  os.chdir('..')
   output_file = open('index.html', 'w')
 
   # Replace the placeholder for the movie tiles with the actual dynamically generated content
