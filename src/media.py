@@ -26,7 +26,7 @@ class Movie():
             year_query = '&year=' + options['year']
 
         # otherwise default to first search result based on title
-        api_url = self.BASE_API_URI + 'search/movie?query=' + options['title'] + '&api_key='+ API_KEY + year_query
+        api_url = self.BASE_API_URI + 'search/movie?query=' + options['title'] + '&api_key='+ API_KEY + year_query  #NOQA
         connection = urllib.urlopen(api_url)
         id = json.loads(connection.read())['results'][0]['id']
         connection.close()
@@ -34,7 +34,7 @@ class Movie():
 
     def get_movie_data(self, movie_id):
         # get poster image and other related movie data for specified movie
-        data_url = self.BASE_API_URI + 'movie/' + str(movie_id) + '?api_key=' + API_KEY
+        data_url = self.BASE_API_URI + 'movie/' + str(movie_id) + '?api_key=' + API_KEY  #NOQA
         connection = urllib.urlopen(data_url)
         data = json.loads(connection.read())
         connection.close()
@@ -42,8 +42,8 @@ class Movie():
 
     def get_trailer_url(self, movie_id):
         # get trailer data for specified movie
-        data_url = self.BASE_API_URI + 'movie/' + str(movie_id) + '/videos?api_key=' + API_KEY
+        data_url = self.BASE_API_URI + 'movie/' + str(movie_id) + '/videos?api_key=' + API_KEY  #NOQA
         connection = urllib.urlopen(data_url)
-        data = json.loads(connection.read())['results'][0]['key']
+        results = json.loads(connection.read())['results']
         connection.close()
-        return data
+        return results[0]['key']  # return first result key
