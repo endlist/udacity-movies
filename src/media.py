@@ -16,12 +16,20 @@ class Movie():
     """This class provides a way to store movie-related information."""
 
     def __init__(self, options):
-        self.data = options.copy()
-        # self.data['id'] = self.get_movie_id(options)
+        if not options.has_key('title'):
+            raise Exception('Title is required')
 
-        # get data from API
-        # self.data['trailer_id'] = self.get_trailer_url(self.data['id'])
-        # self.data.update(self.get_movie_data(self.data['id']))
+        # default data to given options
+        self.data = options.copy()
+
+        # get movie id from api
+        self.data['id'] = self.get_movie_id(options)
+
+        # get trailer from API
+        self.data['trailer_id'] = self.get_trailer_url(self.data['id'])
+
+        # get other movie metadata from API
+        self.data.update(self.get_movie_data(self.data['id']))
 
     def get_movie_id(self, options):
         # if there is a year specification, use it,
