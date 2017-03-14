@@ -1,4 +1,3 @@
-import webbrowser
 import urllib
 try:
     from urllib.parse import urljoin
@@ -8,7 +7,9 @@ except ImportError:
 import json
 import tmdb_config
 
+
 class Movie():
+
     """This class provides a way to store movie-related information."""
 
     # you will need to create a tmdb_config file with your own API key
@@ -16,7 +17,7 @@ class Movie():
     BASE_API_URL = 'https://api.themoviedb.org/3/'
 
     def __init__(self, options):
-        if not options.has_key('title'):
+        if 'title' not in options:
             raise Exception('Title is required')
 
         # default data to given options
@@ -39,13 +40,13 @@ class Movie():
         return year_query
 
     def get_movie_search_query_string(self, options):
-        return urljoin(self.BASE_API_URL, 'search/movie?query=' + options['title'] + '&api_key='+ self.API_KEY)  #NOQA
+        return urljoin(self.BASE_API_URL, 'search/movie?query=' + options['title'] + '&api_key=' + self.API_KEY)  # NOQA
 
     def get_movie_query_string(self, options):
-        return urljoin(self.BASE_API_URL, 'movie/' + str(options['id']) + '?api_key='+ self.API_KEY)  #NOQA
+        return urljoin(self.BASE_API_URL, 'movie/' + str(options['id']) + '?api_key=' + self.API_KEY)  # NOQA
 
     def get_movie_video_query_string(self, options):
-        return urljoin(self.BASE_API_URL, 'movie/' + str(options['id']) + '/videos?api_key='+ self.API_KEY)  #NOQA
+        return urljoin(self.BASE_API_URL, 'movie/' + str(options['id']) + '/videos?api_key=' + self.API_KEY)  # NOQA
 
     def get_movie_id(self, options):
         # if there is a year specification, use it,
@@ -73,3 +74,4 @@ class Movie():
         results = json.loads(connection.read())['results']
         connection.close()
         return results[0]['key']  # return first result key
+
